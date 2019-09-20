@@ -5,14 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Rigidbody2D PlayerRgdbdy;
-    float moveX = 5f, moveY= 3;
+    public float moveX = -2f, moveY= 1;
     bool avanzar = false;
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-                    Movement();
+                Movement();
         }
         
 
@@ -34,6 +34,9 @@ public class Player : MonoBehaviour
      se dispara en un rango de accion que se va moviendo continuamente en arco
      al disparar el jugador se pasa al turno de disparar del enemigo (deberia ser al azar tambien)
 
+    un cuadrado que se monta sobre el otro yy se desplaza en x hacia la der o izq segun corresponda
+    un rayo que salga por detras del personaje y detecte colisiones chocara con las escalas y sabra cuando parar cuando no coque con algo cercano 
+    hacer qeu el colider no se active hasta tocar a la persona o que no se reacione sino a los coliders del y en el que esta
 
          */
 }
