@@ -5,22 +5,29 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Rigidbody2D PlayerRgdbdy;
-    public float moveX = -2f, moveY= 1;
+    public float moveX = -2f, moveY= 20, constantVel = -2f;
     bool avanzar = false;
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-                Movement();
-        }
+        PlayerRgdbdy.velocity = new Vector2(constantVel,0);
+
+       
         
 
     }
 
+    private void FixedUpdate()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Movement();
+        }
+    }
+
     public void Movement()
     {
-        PlayerRgdbdy.velocity = new Vector2(moveX, moveY); // velocity es una propiedad de la clase Rigidbody que permite modificar la posicion del transform
+        PlayerRgdbdy.AddForce(new Vector2 (1, 1) * 10, ForceMode2D.Impulse); // velocity es una propiedad de la clase Rigidbody que permite modificar la posicion del transform
     }
 
 
