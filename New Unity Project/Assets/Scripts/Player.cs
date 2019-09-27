@@ -5,29 +5,49 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Rigidbody2D PlayerRgdbdy;
-    public float moveX = -2f, moveY= 20, constantVel = -2f;
-    bool avanzar = false;
+    private float constantVel = -2f, highJumpMultiplier= 2.5f, lowJumpMultper = 2f;
+    public float impulseStrength = 5;
+
 
     private void Update()
     {
-        PlayerRgdbdy.velocity = new Vector2(constantVel,0);
+        if (Input.GetKey("left"))
+        {
+            PlayerRgdbdy.velocity = new Vector2(constantVel, 0);
+            print("presionas izq");
+        }
 
-       
-        
 
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            PlayerRgdbdy.velocity = new Vector2(constantVel* -1, 0);
+            print("presionas Rigth");
+        }
     }
 
     private void FixedUpdate()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown("space"))
         {
-            Movement();
+            PlayerRgdbdy.velocity = Vector2.up * impulseStrength;
+            MovementFix();
+            print("presionas espacio");
         }
     }
 
-    public void Movement()
+    public void MovementFix()
     {
-        PlayerRgdbdy.AddForce(new Vector2 (1, 1) * 10, ForceMode2D.Impulse); // velocity es una propiedad de la clase Rigidbody que permite modificar la posicion del transform
+        // PlayerRgdbdy.AddForce(new Vector2 (-1, 2) * impulseStrength, ForceMode2D.Impulse); // velocity es una propiedad de la clase Rigidbody que permite modificar la posicion del transform
+        if (PlayerRgdbdy.velocity.y < 0)
+        {
+            PlayerRgdbdy.velocity += Vector2.up * Physics2D.gravity.y * (highJumpMultiplier - 1) * Time.deltaTime;
+        }
+
+        else if (PlayerRgdbdy.velocity.y > 0 && !Input.GetButton("space"))
+        {
+            PlayerRgdbdy.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultper - 1) * Time.deltaTime;
+        }
+
     }
 
 
