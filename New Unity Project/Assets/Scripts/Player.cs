@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Rigidbody2D PlayerRgdbdy;
-    private float constantVel = -2f, highJumpMultiplier= 2.5f, lowJumpMultper = 2f;
+    Rigidbody2D PlayerRgdbdy;
+    private float constantVel = -2f, highJumpMultiplier= 2f, lowJumpMultper = 2.5f;
     public float impulseStrength = 5;
 
+
+    private void Awake()
+    {
+        PlayerRgdbdy = GetComponent<Rigidbody2D>();
+    }
 
     private void Update()
     {
@@ -30,9 +35,10 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown("space"))
         {
             PlayerRgdbdy.velocity = Vector2.up * impulseStrength;
-            MovementFix();
             print("presionas espacio");
         }
+
+        MovementFix();
     }
 
     public void MovementFix()
@@ -43,7 +49,7 @@ public class Player : MonoBehaviour
             PlayerRgdbdy.velocity += Vector2.up * Physics2D.gravity.y * (highJumpMultiplier - 1) * Time.deltaTime;
         }
 
-        else if (PlayerRgdbdy.velocity.y > 0 && !Input.GetButton("space"))
+        else if (PlayerRgdbdy.velocity.y > 0 && !Input.GetKey("space"))
         {
             PlayerRgdbdy.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultper - 1) * Time.deltaTime;
         }
