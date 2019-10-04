@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Stairs : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private float cantidadEscaleras = Random.Range(0,6);
+    /* tiene un rango de creación las escalas 
+     las genera y posicionas
+     se activa su rigidbody cuando esta el personaje por encima de cierto nivel sobre al escala
+         */ 
     void Start()
     {
         

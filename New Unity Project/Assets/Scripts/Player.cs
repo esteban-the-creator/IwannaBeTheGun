@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     Rigidbody2D PlayerRgdbdy;
+    public Animator animator; 
     private float constantVel = -2f, highJumpMultiplier= 2f, lowJumpMultper = 2.5f;
     public float impulseStrength = 5;
 
@@ -12,10 +13,23 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         PlayerRgdbdy = GetComponent<Rigidbody2D>();
+        animator = this.GetComponent<Animator>();
     }
 
     private void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            animator.Play("Jump"); // se ejecuta la animación
+            Invoke("RebindAnim",1); // despues de ejecutarse se espera un segundo (para eso es la función invoke de monobhviour) y se llama a ejecución a la función propia RebindAnim
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            animator.Play("JumpRigth"); // se ejecuta la animación
+            Invoke("RebindAnim", 1); // despues de ejecutarse se espera un segundo (para eso es la función invoke de monobhviour) y se llama a ejecución a la función propia RebindAnim
+        }
+
         if (Input.GetKey("left"))
         {
             PlayerRgdbdy.velocity = new Vector2(constantVel, 0);
@@ -30,6 +44,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    void RebindAnim()
+    {
+        this.transform.parent.transform.position = this.transform.position; //se accede a la posición del transform del padre (que funge como mundo para el jugador) del transform en el que estamos trabjando (el del jugador), y le igualamos su valor (osea le igualamos el valor de la posición al padre) con el de el jugador    
+        animator.Rebind(); // después del proceso anterior usamos la función rebindd de la clase animator, que sirve para reiniciar una animación.
+
+    }
     private void FixedUpdate()
     {
         if (Input.GetKeyDown("space"))
